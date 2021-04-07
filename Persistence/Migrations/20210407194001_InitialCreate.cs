@@ -17,7 +17,10 @@ namespace Persistence.Migrations
                     Comment = table.Column<string>(type: "TEXT", nullable: true),
                     Category = table.Column<int>(type: "INTEGER", nullable: false),
                     Priority = table.Column<int>(type: "INTEGER", nullable: false),
-                    Created_At = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Created_At = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated_At = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Done = table.Column<bool>(type: "INTEGER", nullable: false),
+                    User_Id = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

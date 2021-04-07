@@ -34,11 +34,20 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Done")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated_At")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("User_Id")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
