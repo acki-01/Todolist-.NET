@@ -19,8 +19,9 @@ namespace Persistence
                     Category = 1,
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Mój pierwszy todos", 
-                    Comment = "Było ciężko",
+                    Comment = "Na początku było ciężko",
                     Priority = 2,
                     Title = "Mój pierwszy todo",
                     Done = true,
@@ -28,15 +29,81 @@ namespace Persistence
                 },
                 new Todo
                 {
-                    Category = 1,
+                    Category = 2,
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
-                    Description = "Mój pierwszy todos",
-                    Comment = "Było ciężko",
+                    Finish_Time = DateTime.Now.AddDays(2),
+                    Description = "Opis drugiego todosa",
+                    Comment = "Prawie zrobione",
                     Priority = 2,
-                    Title = "Mój pierwszy todo",
+                    Title = "Mój drugi todo",
                     Done = false,
                     User_Id = 1
+                },
+                new Todo
+                {
+                    Category = 2,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(10),
+                    Description = "Opis trzeciego todosa",
+                    Comment = "komentarz",
+                    Priority = 3,
+                    Title = "Mój trzeci todo",
+                    Done = false,
+                    User_Id = 1
+                },
+                                                new Todo
+                {
+                    Category = 2,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(1),
+                    Description = "Opis czwartego todosa",
+                    Comment = "Prawie zrobione",
+                    Priority = 2,
+                    Title = "Mój czwarty todo",
+                    Done = true,
+                    User_Id = 1
+                },
+                                                                new Todo
+                {
+                    Category = 2,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(20),
+                    Description = "Opis piątego todosa",
+                    Comment = "Prawie zrobione",
+                    Priority = 2,
+                    Title = "Mój piąty todo",
+                    Done = false,
+                    User_Id = 1
+                },
+                                                                                new Todo
+                {
+                    Category = 2,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(5),
+                    Description = "Opis szóstego todosa",
+                    Comment = "Prawie zrobione",
+                    Priority = 2,
+                    Title = "Mój szósty todo",
+                    Done = false,
+                    User_Id = 2
+                },
+                                                                                                new Todo
+                {
+                    Category = 2,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(6),
+                    Description = "Opis siódmego todosa",
+                    Comment = "Prawie zrobione",
+                    Priority = 2,
+                    Title = "Mój siódmy todo",
+                    Done = false,
+                    User_Id = 3
                 },
             };
 

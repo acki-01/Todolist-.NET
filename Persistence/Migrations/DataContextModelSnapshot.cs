@@ -37,6 +37,9 @@ namespace Persistence.Migrations
                     b.Property<bool>("Done")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("Finish_Time")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");
 

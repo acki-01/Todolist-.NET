@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Core;
+using Domain;
 using MediatR;
 using Persistence;
 using System;
@@ -9,11 +10,11 @@ namespace Application.Todos
 {
     public class Details
     {
-        public class Query : IRequest<Todo>
+        public class Query : IRequest<Result<Todo>>
         {
             public Guid Id { get; set; }
         }
-        public class Handler : IRequestHandler<Query, Todo>
+        public class Handler : IRequestHandler<Query, Result<Todo>>
         {
             private readonly DataContext _context;
 
@@ -22,9 +23,10 @@ namespace Application.Todos
                 _context = context;
             }
 
-            public async Task<Todo> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Todo>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Todos.FindAsync(request.Id);
+                var todo = await _context.Todos.FindAsync(request.Id);
+                return Result<Todo>.Success(todo);
             }
         }
     }

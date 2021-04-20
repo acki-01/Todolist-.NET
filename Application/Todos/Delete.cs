@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Core;
+using MediatR;
 using Persistence;
 using System;
 using System.Threading;
@@ -8,12 +9,12 @@ namespace Application.Todos
 {
     public class Delete
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
 
@@ -22,14 +23,17 @@ namespace Application.Todos
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var todo = await _context.Todos.FindAsync(request.Id);
 
-                _context.Remove(todo);
-                await _context.SaveChangesAsync();
+                if (todo == null) return null;
 
-                return Unit.Value;
+                _context.Remove(todo);
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if (!result) return Result<Unit>.Failure("Failed to delete todo");
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }

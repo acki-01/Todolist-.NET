@@ -19,6 +19,7 @@ namespace Persistence.Migrations
                     Priority = table.Column<int>(type: "INTEGER", nullable: false),
                     Created_At = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated_At = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Finish_Time = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Done = table.Column<bool>(type: "INTEGER", nullable: false),
                     User_Id = table.Column<int>(type: "INTEGER", nullable: false)
                 },

@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "YZE/dOb8C46DJPvaHlhNWw85l+nVUY3AawgoyM6v9nb/FZyrMDQsb7ihWe5oA9wFEYgGSswjiWy9h+fnMW7Uxg==",
+  "dgSpecHash": "aKG4geWBdCqbhIZT208v2773AkKyYi5kB73r8Tn6C1YMMpVg8u6CcIjkcJRhsgCLFmqrXDkx4tr8Bl57Cptweg==",
   "success": true,
   "projectFilePath": "C:\\Users\\arkad\\.net\\TodoList\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\arkad\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\arkad\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
+    "C:\\Users\\arkad\\.nuget\\packages\\fluentvalidation\\9.3.0\\fluentvalidation.9.3.0.nupkg.sha512",
+    "C:\\Users\\arkad\\.nuget\\packages\\fluentvalidation.aspnetcore\\9.3.0\\fluentvalidation.aspnetcore.9.3.0.nupkg.sha512",
+    "C:\\Users\\arkad\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\9.3.0\\fluentvalidation.dependencyinjectionextensions.9.3.0.nupkg.sha512",
     "C:\\Users\\arkad\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\arkad\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\arkad\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

@@ -1,5 +1,7 @@
 ﻿
+using Application.Core;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 using System.Threading;
@@ -9,12 +11,20 @@ namespace Application.Todos
 {
     public class Create
     {
-        public class Commmand : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Todo Todo { get; set; }
         }
 
-        public class Handler : IRequestHandler<Commmand>
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Todo).SetValidator(new TodoValidator());
+            }
+        }
+
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
 
@@ -23,13 +33,15 @@ namespace Application.Todos
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Commmand request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 _context.Todos.Add(request.Todo);
 
-                await _context.SaveChangesAsync();
+                var result = await _context.SaveChangesAsync() > 0;
 
-                return Unit.Value;
+                if (!result) return Result<Unit>.Failure("Failed to create todo");
+
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }
