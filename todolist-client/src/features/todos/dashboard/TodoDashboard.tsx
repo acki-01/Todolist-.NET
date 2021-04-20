@@ -1,32 +1,33 @@
-import React from "react";
-import {Grid} from "semantic-ui-react";
-import {Todo} from "../../../app/models/todo";
+import React, { useEffect } from "react";
 import TodoList from "./TodoList";
-import TodoDetails from "../details/TodoDetails";
-import TodoForm from "../form/TodoForm";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
+import LoaderIndicator from "../../../app/layout/LoaderIndicator";
+import { Col, Row } from "antd";
+import TodoFilters from "./TodoFilters";
 
-interface Props {
-    todos: Todo[]
-    selectedTodo: Todo | undefined
-    selectTodo: (id: string) => void
-    cancelSelectTodo: () => void
-    editMode: boolean
-    openForm: (id: string) => void
-    closeForm: () => void
-    createOrEditTodo: (todo: Todo) => void
-    deleteTodo: (id: string) => void
+function TodoDashboard() {
+  const { todoStore } = useStore();
+  const { loadTodos, todoRegistry } = todoStore;
+
+  useEffect(() => {
+    if (todoRegistry.size <= 1) loadTodos();
+  }, [todoRegistry.size, loadTodos]);
+
+  if (todoStore.loadingInitial)
+    return <LoaderIndicator content={"Loading App"} />;
+  return (
+    <>
+      <Row>
+        <Col span={"10"} offset={"4"}>
+          <TodoList />
+        </Col>
+        <Col span={"4"} offset={"1"} style={{ marginTop: "44px" }}>
+          <TodoFilters />
+        </Col>
+      </Row>
+    </>
+  );
 }
 
-export default function TodoDashboard({todos, selectedTodo, cancelSelectTodo, selectTodo, editMode, closeForm, openForm, createOrEditTodo, deleteTodo} : Props) {
-    return (
-        <Grid>
-            <Grid.Column width={'10'}>
-                <TodoList todos={todos} selectTodo={selectTodo} deleteTodo={deleteTodo}/>
-            </Grid.Column>
-            <Grid.Column width={"6"}>
-                {selectedTodo && !editMode && <TodoDetails todo={selectedTodo} cancelSelectTodo={cancelSelectTodo} openForm={openForm}/>}
-                {editMode && <TodoForm closeForm={closeForm} selectedTodo={selectedTodo} createOrEditTodo={createOrEditTodo}/>}
-            </Grid.Column>
-        </Grid>
-    )
-}
+export default observer(TodoDashboard);

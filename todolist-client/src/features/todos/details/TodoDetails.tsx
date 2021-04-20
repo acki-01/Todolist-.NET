@@ -1,32 +1,38 @@
-import React from "react";
-import {Todo} from "../../../app/models/todo";
-import {Card, Image, Button} from "semantic-ui-react";
+import React, { useEffect } from "react";
+import { Row, Col, Space } from "antd";
+import { useStore } from "../../../app/stores/store";
+import LoaderIndicator from "../../../app/layout/LoaderIndicator";
+import { useParams } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import TodoDetailedHeader from "./TodoDetailedHeader";
+import TodoDetailedInfo from "./TodoDetailedInfo";
+import TodoDetailedComments from "./TodoDetailedComments";
+import TodoDetailedSidebar from "./TodoDetailedSidebar";
 
-interface Props {
-    todo: Todo
-    cancelSelectTodo: () => void
-    openForm: (id: string) => void
+function TodoDetails() {
+  const { todoStore } = useStore();
+  const { selectedTodo: todo, loadTodo, loadingInitial } = todoStore;
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    if (id) loadTodo(id);
+  }, [id, loadTodo]);
+
+  if (loadingInitial || !todo) return <LoaderIndicator />;
+  return (
+    <Row>
+      <Col span={"10"}>
+        <Space direction="vertical">
+          <TodoDetailedHeader todo={todo} />
+          <TodoDetailedInfo todo={todo} />
+          <TodoDetailedComments />
+        </Space>
+      </Col>
+      <Col span={"6"}>
+        <TodoDetailedSidebar />
+      </Col>
+    </Row>
+  );
 }
 
-export default function TodoDetails({todo, cancelSelectTodo, openForm}: Props) {
-    return (
-        <Card fluid>
-            <Image src={`/assets/categoryImages/${todo.category}.jpg`} />
-            <Card.Content>
-                <Card.Header>{todo.title}</Card.Header>
-                <Card.Meta>
-                    <span>{todo.created_At}</span>
-                </Card.Meta>
-                <Card.Description>
-                    {todo.description}
-                </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-                <Button.Group widths={2}>
-                    <Button onClick={() => openForm(todo.id)} basic color={"blue"} content={"Edit"}/>
-                    <Button onClick={cancelSelectTodo} basic color={"blue"} content={"Cancel"}/>
-                </Button.Group>
-            </Card.Content>
-        </Card>
-    )
-}
+export default observer(TodoDetails);

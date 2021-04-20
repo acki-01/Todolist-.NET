@@ -1,38 +1,27 @@
-import React from "react";
-import {Item, Segment, Button, Label} from "semantic-ui-react";
-import {Todo} from "../../../app/models/todo";
+import React, { Fragment } from "react";
+import { List } from "antd";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
+import TodoListItem from "./TodoListItem";
+import Text from "antd/es/typography/Text";
 
-interface Props {
-    todos: Todo[]
-    selectTodo: (id: string) => void
-    deleteTodo: (id: string) => void
+function TodoList() {
+  const { todoStore } = useStore();
+  const { groupedTodos } = todoStore;
+
+  return (
+    <>
+      {groupedTodos.map(([group, todos]) => (
+        <Fragment key={group}>
+          <List
+            header={<Text>{group}</Text>}
+            dataSource={todos}
+            renderItem={(todo) => <TodoListItem todo={todo} />}
+          />
+        </Fragment>
+      ))}
+    </>
+  );
 }
 
-export default function TodoList({todos, selectTodo, deleteTodo} : Props) {
-    console.log({todos})
-    return (
-        <Segment>
-            <Item.Group divided>
-                {todos.map((todo: any) => (
-                    <Item key={todo.id}>
-                        <Item.Content>
-                            <Item.Header as={"a"}>{todo.title}</Item.Header>
-                            <Item.Meta>{todo.created_At}</Item.Meta>
-                            <Item.Meta>{todo.priority}</Item.Meta>
-                            <Item.Description>
-                                <p>{todo.description}</p>
-                                <p>{todo.comment}</p>
-                            </Item.Description>
-                            <Item.Extra>
-                                <Button onClick={() => selectTodo(todo.id)} floated={"right"} content={"View"} color={"blue"} />
-                                <Button onClick={() => deleteTodo(todo.id)} floated={"right"} content={"Delete"} color={"red"} />
-                                <Label basic content={todo.category}/>
-                            </Item.Extra>
-                        </Item.Content>
-                    </Item>
-                ))}
-            </Item.Group>
-        </Segment>
-
-    )
-}
+export default observer(TodoList);

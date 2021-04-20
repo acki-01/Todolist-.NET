@@ -1,23 +1,37 @@
-import React from 'react'
-import {Button, Container, Menu} from "semantic-ui-react";
+import React from "react";
+import { Button, Divider, Menu } from "antd";
+import { NavLink } from "react-router-dom";
+import { Header } from "antd/es/layout/layout";
+import { CheckCircleTwoTone } from "@ant-design/icons";
 
-interface Props {
-    openForm: () => void
-}
-
-export default function NavBar({openForm}: Props) {
-    return (
-        <Menu inverted fixed={"top"}>
-            <Container>
-                <Menu.Item>
-                    <img src={"/assets/logo.png"} alt={"logo"} style={{marginRight: '10px'}}/>
-                    Todos App
-                </Menu.Item>
-                <Menu.Item name={"Todo"}/>
-                <Menu.Item>
-                    <Button onClick={openForm} positive content={"Create Todo"}/>
-                </Menu.Item>
-            </Container>
-        </Menu>
-    )
+export default function NavBar() {
+  return (
+    <Header>
+      <Menu theme="dark" mode="horizontal">
+        <Menu.Item>
+          <NavLink
+            to={"/"}
+            exact
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <CheckCircleTwoTone style={{ fontSize: "36px" }} />
+            Todos App
+          </NavLink>
+        </Menu.Item>
+        <Divider type={"vertical"} />
+        <NavLink to={"/todos"}>Todo</NavLink>
+        <Divider type={"vertical"} />
+        <NavLink to={"/errors"}>Errors</NavLink>
+        <Menu.Item>
+          <Button>
+            <NavLink to={"/createTodo"}>Create Todo</NavLink>
+          </Button>
+        </Menu.Item>
+      </Menu>
+    </Header>
+  );
 }
