@@ -12,6 +12,7 @@ namespace Domain
         public int Priority { get; set; }
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
+        public DateTime Finish_Time { get; set; }
         public bool Done { get; set; }
         public int User_Id { get; set; }
 

@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Todo } from "../models/todo";
 import agent from "../api/agent";
+import { format } from "date-fns";
 
 export default class TodoStore {
   todos: Todo[] = [];
@@ -8,7 +9,7 @@ export default class TodoStore {
   selectedTodo: Todo | undefined = undefined;
   editMode = false;
   loading = false;
-  loadingInitial = true;
+  loadingInitial = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -16,14 +17,14 @@ export default class TodoStore {
 
   get todosByDate() {
     return Array.from(this.todoRegistry.values()).sort(
-      (a, b) => Date.parse(a.created_At) - Date.parse(b.created_At)
+      (a, b) => a.created_At!.getTime() - b.created_At!.getTime()
     );
   }
 
   get groupedTodos() {
     return Object.entries(
       this.todosByDate.reduce((todos, todo) => {
-        const date = todo.finish_Time;
+        const date = format(todo.finish_Time!, "dd MMM yyyy");
         todos[date] = todos[date] ? [...todos[date], todo] : [todo];
         return todos;
       }, {} as { [key: string]: Todo[] })
@@ -73,9 +74,9 @@ export default class TodoStore {
   };
 
   private setTodo = (todo: Todo) => {
-    todo.created_At = todo.created_At.split("T")[0];
-    todo.updated_At = todo.created_At.split("T")[0];
-    todo.finish_Time = todo.finish_Time.split("T")[0];
+    todo.created_At = new Date(todo.created_At!);
+    todo.updated_At = new Date(todo.created_At!);
+    todo.finish_Time = new Date(todo.finish_Time!);
     this.todoRegistry.set(todo.id, todo);
   };
 
@@ -85,8 +86,8 @@ export default class TodoStore {
 
   createTodo = async (todo: Todo) => {
     this.loading = true;
-    todo.created_At = new Date().toISOString();
-    todo.updated_At = new Date().toISOString();
+    todo.created_At = new Date();
+    todo.updated_At = new Date();
     try {
       await agent.Todos.create(todo);
       runInAction(() => {
@@ -105,7 +106,7 @@ export default class TodoStore {
 
   updateTodo = async (todo: Todo) => {
     this.loading = true;
-    todo.updated_At = new Date().toISOString();
+    todo.updated_At = new Date();
     try {
       await agent.Todos.update(todo);
       runInAction(() => {

@@ -1,37 +1,51 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Button, Form, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button } from "antd";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LoaderIndicator from "../../../app/layout/LoaderIndicator";
-import { v4 as uuid } from "uuid";
-import TextArea from "antd/lib/input/TextArea";
 import Card from "antd/lib/card";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import TextInput from "../../../app/common/form/TextInput";
+import TextAreaInput from "../../../app/common/form/TextAreaInput";
+import SelectInput from "../../../app/common/form/SelectInput";
+import { categoryOptions } from "../../../app/models/categoryOptions";
+import DateInput from "../../../app/common/form/DateInput";
+import { Todo } from "../../../app/models/todo";
+import { history } from "../../../index";
+import { v4 as uuid } from "uuid";
 
 function TodoForm() {
   const { todoStore } = useStore();
   const {
-    createTodo,
-    updateTodo,
     loading,
     loadTodo,
     loadingInitial,
+    createTodo,
+    updateTodo,
   } = todoStore;
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
 
-  const [todo, setTodo] = useState({
+  const [todo, setTodo] = useState<Todo>({
     id: "",
     title: "",
     description: "",
     comment: "",
     category: 1,
     priority: 1,
-    created_At: "",
-    updated_At: "",
-    finish_Time: "",
+    created_At: null,
+    updated_At: null,
+    finish_Time: null,
     done: false,
     user_Id: 0,
+  });
+
+  const validationSchema = Yup.object({
+    title: Yup.string().required("The todo title is required"),
+    category: Yup.string().required("The todo category is required"),
+    finish_Time: Yup.string().required("Date is required").nullable(),
+    done: Yup.boolean().required("The todo category is required"),
   });
 
   useEffect(() => {
@@ -40,7 +54,7 @@ function TodoForm() {
     }
   }, [id, loadTodo]);
 
-  function handleSubmit() {
+  function handleForSubmit(todo: Todo) {
     if (todo.id.length === 0) {
       let newTodo = {
         ...todo,
@@ -51,76 +65,64 @@ function TodoForm() {
       updateTodo(todo).then(() => history.push(`/todos/${todo.id}`));
     }
   }
-
-  function handleInputChange(
-    ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name, value } = ev.target;
-    setTodo({ ...todo, [name]: value });
-  }
+  //
+  // function handleInputChange(
+  //   ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) {
+  //   const { name, value } = ev.target;
+  //   setTodo({ ...todo, [name]: value });
+  // }
 
   if (loadingInitial) return <LoaderIndicator content={"Loading todo..."} />;
   return (
     <Card>
-      <Form onFinish={handleSubmit} autoComplete={"off"}>
-        <Form.Item label={"Title"}>
-          <Input
-            placeholder={"Title"}
-            value={todo.title}
-            name={"title"}
-            onChange={handleInputChange}
-          />
-        </Form.Item>
+      <Formik
+        initialValues={todo}
+        onSubmit={(values) => handleForSubmit(values)}
+        validationSchema={validationSchema}
+        enableReinitialize
+      >
+        {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+          <Form onSubmit={handleSubmit} autoComplete={"off"}>
+            <TextInput placeholder={"Title"} name={"title"} />
 
-        <Form.Item label={"Description"}>
-          <TextArea
-            placeholder={"Description"}
-            value={todo.description}
-            name={"description"}
-            onChange={handleInputChange}
-          />
-        </Form.Item>
+            <TextAreaInput
+              rows={3}
+              placeholder={"Description"}
+              name={"description"}
+            />
 
-        <Form.Item label={"Category"}>
-          <Input
-            placeholder={"Category"}
-            value={todo.category}
-            name={"category"}
-            onChange={handleInputChange}
-          />
-        </Form.Item>
+            <SelectInput
+              options={categoryOptions}
+              placeholder={"Category"}
+              name={"category"}
+            />
 
-        <Form.Item label={"Date"}>
-          <Input
-            placeholder={"Date"}
-            type={"date"}
-            value={todo.created_At}
-            name={"created_At"}
-            onChange={handleInputChange}
-          />
-        </Form.Item>
+            <DateInput
+              placeholderText={"Finish Time"}
+              name={"finish_Time"}
+              showTimeSelect
+              timeCaption={"time"}
+              dateFormat={"MMMM d, yyyy h:mm aa"}
+            />
 
-        <Form.Item label={"Comment"}>
-          <TextArea
-            placeholder={"Comment"}
-            value={todo.comment}
-            name={"comment"}
-            onChange={handleInputChange}
-          />
-        </Form.Item>
+            <TextAreaInput rows={2} placeholder={"Comment"} name={"comment"} />
 
-        {/*<Form.Checkbox placeholder={"Done"} value={todo.done} name={"done"}/>*/}
-        <Form.Item label={"Submit"}>
-          <Button htmlType={"submit"} loading={loading} type={"primary"}>
-            {"Submit"}
-          </Button>
-        </Form.Item>
-        <Form.Item label={"Cancel"}>
-          <Link to={"/todos"}>
-            <Button htmlType={"button"}>{"Cancel"}</Button>
-          </Link>
-        </Form.Item>
-      </Form>
+            {/*<Form.Checkbox placeholder={"Done"} value={todo.done} name={"done"}/>*/}
+            <Button
+              disabled={isSubmitting || !dirty || !isValid}
+              htmlType={"submit"}
+              loading={loading}
+              type={"primary"}
+            >
+              {"Submit"}
+            </Button>
+            <Link to={"/todos"}>
+              <Button htmlType={"button"}>{"Cancel"}</Button>
+            </Link>
+          </Form>
+        )}
+      </Formik>
     </Card>
   );
 }

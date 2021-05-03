@@ -7,6 +7,7 @@ import {
   InfoOutlined,
   StarOutlined,
 } from "@ant-design/icons";
+import { format } from "date-fns";
 
 type priorityTypes = {
   [key: number]: {
@@ -57,7 +58,7 @@ function TodoDetailedInfo({ todo }: Props) {
       <Row>
         <Space size={"large"}>
           <ClockCircleOutlined style={{ marginRight: "10px" }} />
-          <span>{todo.updated_At}</span>
+          <span>{format(todo.finish_Time!, "dd MMM yyyy h:mm aa")}</span>
         </Space>
       </Row>
     </Card>

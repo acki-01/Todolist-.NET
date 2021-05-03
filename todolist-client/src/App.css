@@ -16,3 +16,7 @@ body {
 .ant-image-img {
   border-radius: 50%;
 }
+
+.react-datepicker-wrapper {
+  width: 100%;
+}

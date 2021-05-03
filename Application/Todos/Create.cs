@@ -22,7 +22,7 @@ namespace Application.Todos
             {
                 RuleFor(x => x.Todo).SetValidator(new TodoValidator());
             }
-        }
+        }          
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {

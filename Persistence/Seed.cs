@@ -3,13 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context)
+        public static async Task SeedData(DataContext context, UserManager<User> userManager)
         {
+            if (!userManager.Users.Any())
+            {
+                var users = new List<User>
+                {
+                    new User{DisplayName= "Janek", UserName ="Jan", Email= "jan@example.com"},
+                    new User{DisplayName= "Arek", UserName ="Arkadiusz", Email= "arkadiusz@example.com"},
+                    new User{DisplayName= "Stas", UserName ="Stanislaw", Email= "stanislaw@example.com"},
+                };
+
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "B@ardzoTrudne1");
+                }
+            }
             if (context.Todos.Any()) return;
 
             var todos = new List<Todo>
@@ -53,7 +68,7 @@ namespace Persistence
                     Done = false,
                     User_Id = 1
                 },
-                                                new Todo
+                new Todo
                 {
                     Category = 2,
                     Created_At = DateTime.Now,
@@ -66,7 +81,7 @@ namespace Persistence
                     Done = true,
                     User_Id = 1
                 },
-                                                                new Todo
+                new Todo
                 {
                     Category = 2,
                     Created_At = DateTime.Now,
@@ -79,7 +94,7 @@ namespace Persistence
                     Done = false,
                     User_Id = 1
                 },
-                                                                                new Todo
+                new Todo
                 {
                     Category = 2,
                     Created_At = DateTime.Now,
@@ -92,7 +107,7 @@ namespace Persistence
                     Done = false,
                     User_Id = 2
                 },
-                                                                                                new Todo
+                new Todo
                 {
                     Category = 2,
                     Created_At = DateTime.Now,

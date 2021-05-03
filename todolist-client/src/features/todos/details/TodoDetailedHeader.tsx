@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Image, Card, Typography } from "antd";
 import { Todo } from "../../../app/models/todo";
 import { DeleteOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const activityImageStyle = {
   filter: "brightness(30%)",
@@ -35,7 +36,9 @@ function TodoDetailedHeader({ todo }: Props) {
         }}
       >
         <Button type={"primary"}>Share Todo</Button>
-        <Button>Manage Todo</Button>
+        <Button>
+          <Link to={`/manage/${todo.id}`}>{"Manage Todo"}</Link>
+        </Button>
         <Button danger icon={<DeleteOutlined />}>
           Cancel Share
         </Button>

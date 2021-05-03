@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Typography, Card } from "antd";
 import axios from "axios";
+import ValidationErrors from "./ValidationErrors";
 
 export default function TestErrors() {
   const baseUrl = "http://localhost:5000/";
+  const [errors, setErrors] = useState([]);
 
   function handleNotFound() {
     axios
@@ -30,15 +32,11 @@ export default function TestErrors() {
   }
 
   function handleBadGuid() {
-    axios
-      .get(baseUrl + "activities/notaguid")
-      .catch((err) => console.log(err.response));
+    axios.get(baseUrl + "todos/notaguid").catch((err) => console.log(err));
   }
 
   function handleValidationError() {
-    axios
-      .post(baseUrl + "activities", {})
-      .catch((err) => console.log(err.response));
+    axios.post(baseUrl + "todos", {}).catch((err) => setErrors(err));
   }
 
   return (
@@ -54,6 +52,7 @@ export default function TestErrors() {
           <Button onClick={handleBadGuid}>{"Bad Guid"}</Button>
         </Button.Group>
       </Card>
+      {errors.length && <ValidationErrors errors={errors} />}
     </>
   );
 }

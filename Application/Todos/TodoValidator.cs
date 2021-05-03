@@ -13,8 +13,7 @@ namespace Application.Todos
             RuleFor(x => x.Created_At).NotEmpty();
             RuleFor(x => x.Updated_At).NotEmpty();
             RuleFor(x => x.Finish_Time).NotEmpty();
-            RuleFor(x => x.Done).NotEmpty();
-            RuleFor(x => x.User_Id).NotEmpty();
+            // RuleFor(x => x.User_Id).NotEmpty();
         }
     }
 }

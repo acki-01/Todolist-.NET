@@ -12,6 +12,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { Todo } from "../../../app/models/todo";
 import { ClockCircleOutlined, DeleteOutlined } from "@ant-design/icons";
+import { format } from "date-fns";
 
 interface Props {
   todo: Todo;
@@ -72,7 +73,7 @@ export default function TodoListItem({ todo }: Props) {
             </Tag>
             <Card.Meta
               title={<ClockCircleOutlined style={{ marginRight: "10px" }} />}
-              description={todo.updated_At}
+              description={format(todo.updated_At!, "dd MMM yyyy h:mm aa")}
             />
           </div>
         }

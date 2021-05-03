@@ -5,9 +5,9 @@ export interface Todo {
   comment: string;
   category: number;
   priority: number;
-  created_At: string;
-  updated_At: string;
-  finish_Time: string;
+  created_At: Date | null;
+  updated_At: Date | null;
+  finish_Time: Date | null;
   done: boolean;
   user_Id: number;
 }
