@@ -6,11 +6,19 @@ using System.Text;
 using System;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 
 namespace API.Services
 {
     public class JWTService
     {
+        private readonly IConfiguration _config;
+
+        public JWTService(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public string CreateJWT(User user)
         {
             var claims = new List<Claim>
@@ -20,7 +28,7 @@ namespace API.Services
                 new Claim(ClaimTypes.Email, user.Email)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("to jest tajny token"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenSecret"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDesc = new SecurityTokenDescriptor

@@ -26,7 +26,7 @@ namespace API.Extensions
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("to jest tajny token")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenSecret"])),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
