@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -15,6 +16,8 @@ namespace Domain
         public DateTime Finish_Time { get; set; }
         public bool Done { get; set; }
         public int User_Id { get; set; }
+
+        public ICollection<TodoParticipant> Participants { get; set; } = new List<TodoParticipant>();
 
     }
 }

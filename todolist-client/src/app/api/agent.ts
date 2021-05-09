@@ -3,11 +3,18 @@ import { Todo } from "../models/todo";
 import { toast } from "react-toastify";
 import { history } from "../../index";
 import { store } from "../stores/store";
+import { User, UserFormValues } from "../models/user";
 
 axios.defaults.baseURL = "http://localhost:5000/";
 
 const sleep = (delay: number) =>
   new Promise((resolve) => setTimeout(resolve, delay));
+
+axios.interceptors.request.use((config) => {
+  const token = store.commonStore.token;
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
 axios.interceptors.response.use(
   async (res) => {
@@ -66,8 +73,16 @@ export const Todos = {
   delete: (id: string) => requests.delete<void>(`/todos/${id}`),
 };
 
+const Account = {
+  current: () => requests.get<User>("/user"),
+  login: (user: UserFormValues) => requests.post<User>("/user/login", user),
+  register: (user: UserFormValues) =>
+    requests.post<User>("/user/register", user),
+};
+
 const agent = {
   Todos,
+  Account,
 };
 
 export default agent;

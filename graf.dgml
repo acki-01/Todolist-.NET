@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Database" Label="todolist.db" Category="Database" Group="Expanded" />
+    <Node Id="Todos" Label="Todos" Category="Table" Group="Collapsed" />
+    <Node Id="Todos_Id" Label="Id" Category="Field Primary" Description="text" />
+    <Node Id="Todos_Title" Label="Title" Category="Field Optional" Description="text" />
+    <Node Id="Todos_Description" Label="Description" Category="Field Optional" Description="text" />
+    <Node Id="Todos_Comment" Label="Comment" Category="Field Optional" Description="text" />
+    <Node Id="Todos_Category" Label="Category" Category="Field" Description="bigint" />
+    <Node Id="Todos_Priority" Label="Priority" Category="Field" Description="bigint" />
+    <Node Id="Todos_Created_At" Label="Created_At" Category="Field" Description="text" />
+    <Node Id="Todos_Updated_At" Label="Updated_At" Category="Field" Description="text" />
+    <Node Id="Todos_Finish_Time" Label="Finish_Time" Category="Field" Description="text" />
+    <Node Id="Todos_Done" Label="Done" Category="Field" Description="bigint" />
+    <Node Id="Todos_User_Id" Label="User_Id" Category="Field" Description="bigint" />
+  </Nodes>
+  <Links>
+    <Link Source="Database" Target="Todos" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Id" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Title" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Description" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Comment" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Category" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Priority" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Created_At" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Updated_At" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Finish_Time" Category="Contains" />
+    <Link Source="Todos" Target="Todos_Done" Category="Contains" />
+    <Link Source="Todos" Target="Todos_User_Id" Category="Contains" />
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Table" ValueLabel="True">
+      <Condition Expression="HasCategory('Table')" />
+      <Setter Property="Background" Value="#FFC0C0C0" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Schema" ValueLabel="True">
+      <Condition Expression="HasCategory('Schema')" />
+      <Setter Property="Background" Value="#FF7F9169" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Primary" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Primary')" />
+      <Setter Property="Background" Value="#FF008000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Optional" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Optional')" />
+      <Setter Property="Background" Value="#FF808040" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Foreign" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Foreign')" />
+      <Setter Property="Background" Value="#FF8080FF" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field" ValueLabel="True">
+      <Condition Expression="HasCategory('Field')" />
+      <Setter Property="Background" Value="#FFC0A000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Database" ValueLabel="True">
+      <Condition Expression="HasCategory('Database')" />
+      <Setter Property="Background" Value="#FFFFFFFF" />
+    </Style>
+  </Styles>
+</DirectedGraph>

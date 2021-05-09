@@ -1,10 +1,20 @@
 import React from "react";
-import { Button, Divider, Menu } from "antd";
+import { Button, Divider, Dropdown, Menu, Typography } from "antd";
 import { NavLink } from "react-router-dom";
 import { Header } from "antd/es/layout/layout";
-import { CheckCircleTwoTone } from "@ant-design/icons";
+import {
+  CheckCircleTwoTone,
+  DownOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../stores/store";
+import SubMenu from "antd/es/menu/SubMenu";
 
-export default function NavBar() {
+function NavBar() {
+  const {
+    userStore: { user, logout },
+  } = useStore();
   return (
     <Header>
       <Menu theme="dark" mode="horizontal">
@@ -31,7 +41,34 @@ export default function NavBar() {
             <NavLink to={"/createTodo"}>Create Todo</NavLink>
           </Button>
         </Menu.Item>
+        <Menu.Item>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item>
+                  <Button>
+                    <NavLink to={`/profile/${user?.username}`}>
+                      {"My profile"}
+                    </NavLink>
+                  </Button>
+                </Menu.Item>
+                <Menu.Item>
+                  <Button onClick={logout}>Logout</Button>
+                </Menu.Item>
+              </Menu>
+            }
+            placement="bottomLeft"
+          >
+            <Typography.Text style={{ color: "white" }}>
+              <UserOutlined />
+              {user?.displayName}
+              <DownOutlined />
+            </Typography.Text>
+          </Dropdown>
+        </Menu.Item>
       </Menu>
     </Header>
   );
 }
+
+export default observer(NavBar);

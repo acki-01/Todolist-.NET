@@ -2,7 +2,7 @@ import React from "react";
 import { Alert } from "antd";
 
 interface Props {
-  errors: string[];
+  errors: any;
 }
 
 export default function ValidationErrors({ errors }: Props) {

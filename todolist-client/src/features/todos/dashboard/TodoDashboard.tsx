@@ -15,7 +15,7 @@ function TodoDashboard() {
   }, [todoRegistry.size, loadTodos]);
 
   if (todoStore.loadingInitial)
-    return <LoaderIndicator content={"Loading App"} />;
+    return <LoaderIndicator content={"Loading todos..."} />;
   return (
     <>
       <Row>
