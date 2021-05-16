@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Application.Profiles;
+using System;
 using System.Collections.Generic;
 
-namespace Domain
+namespace Application.Todos
 {
-    public class Todo
+    public class TodoDTO
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -15,8 +16,7 @@ namespace Domain
         public DateTime Updated_At { get; set; }
         public DateTime Finish_Time { get; set; }
         public bool Done { get; set; }
-
-        public ICollection<TodoParticipant> Participants { get; set; } = new List<TodoParticipant>();
-
+        public string OwnerName { get; set; }
+        public ICollection<Profile> Participants { get; set; }
     }
 }

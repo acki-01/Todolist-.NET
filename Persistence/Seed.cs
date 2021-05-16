@@ -11,21 +11,20 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context, UserManager<User> userManager)
         {
-            if (!userManager.Users.Any())
+            if (!userManager.Users.Any() && !context.Todos.Any())
             {
                 var users = new List<User>
                 {
                     new User{DisplayName= "Janek", UserName ="Jan", Email= "jan@example.com"},
                     new User{DisplayName= "Arek", UserName ="Arkadiusz", Email= "arkadiusz@example.com"},
                     new User{DisplayName= "Stas", UserName ="Stanislaw", Email= "stanislaw@example.com"},
+                    new User{DisplayName= "Marek", UserName ="Marek", Email= "marek@example.com"},
                 };
 
                 foreach (var user in users)
                 {
                     await userManager.CreateAsync(user, "B@ardzoTrudne1");
                 }
-            }
-            if (context.Todos.Any()) return;
 
             var todos = new List<Todo>
             {
@@ -35,12 +34,24 @@ namespace Persistence
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Mój pierwszy todos", 
-                    Comment = "Na początku było ciężko",
+                    Description = "Pierwszy todos Janka", 
+                    Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Mój pierwszy todo",
+                    Title = "Janek- zakupy",
                     Done = true,
-                    User_Id = 2
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[0],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[2],
+                            IsOwner = false,
+                        }
+                    }
                 },
                 new Todo
                 {
@@ -48,51 +59,49 @@ namespace Persistence
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(2),
-                    Description = "Opis drugiego todosa",
-                    Comment = "Prawie zrobione",
-                    Priority = 2,
-                    Title = "Mój drugi todo",
+                    Description = "Drugi todos Janka",
+                    Comment = "To jest komentarz",
+                    Priority = 1,
+                    Title = "Janek- ćwiczenia",
                     Done = false,
-                    User_Id = 1
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[0],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[1],
+                            IsOwner = false,
+                        }
+                    }
                 },
                 new Todo
                 {
-                    Category = 2,
+                    Category = 1,
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
-                    Finish_Time = DateTime.Now.AddDays(10),
-                    Description = "Opis trzeciego todosa",
-                    Comment = "komentarz",
-                    Priority = 3,
-                    Title = "Mój trzeci todo",
-                    Done = false,
-                    User_Id = 1
-                },
-                new Todo
-                {
-                    Category = 2,
-                    Created_At = DateTime.Now,
-                    Updated_At = DateTime.Now,
-                    Finish_Time = DateTime.Now.AddDays(1),
-                    Description = "Opis czwartego todosa",
-                    Comment = "Prawie zrobione",
+                    Finish_Time = DateTime.Now.AddDays(5),
+                    Description = "Pierwszy todos Arka",
+                    Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Mój czwarty todo",
+                    Title = "Arek- zakupy",
                     Done = true,
-                    User_Id = 1
-                },
-                new Todo
-                {
-                    Category = 2,
-                    Created_At = DateTime.Now,
-                    Updated_At = DateTime.Now,
-                    Finish_Time = DateTime.Now.AddDays(20),
-                    Description = "Opis piątego todosa",
-                    Comment = "Prawie zrobione",
-                    Priority = 2,
-                    Title = "Mój piąty todo",
-                    Done = false,
-                    User_Id = 1
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[1],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[2],
+                            IsOwner = false,
+                        }
+                    }
                 },
                 new Todo
                 {
@@ -100,30 +109,129 @@ namespace Persistence
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Opis szóstego todosa",
-                    Comment = "Prawie zrobione",
+                    Description = "Drugi todos Arka",
+                    Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Mój szósty todo",
+                    Title = "Arek- ćwiczenia",
                     Done = false,
-                    User_Id = 2
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[1],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[3],
+                            IsOwner = false,
+                        }
+                    }
+                },
+                 new Todo
+                {
+                    Category = 1,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(5),
+                    Description = "Pierwszy todos Stasia",
+                    Comment = "To jest komentarz",
+                    Priority = 2,
+                    Title = "Stas- zakupy",
+                    Done = true,
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[0],
+                            IsOwner = false,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[2],
+                            IsOwner = true,
+                        }
+                    }
                 },
                 new Todo
                 {
                     Category = 2,
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
-                    Finish_Time = DateTime.Now.AddDays(6),
-                    Description = "Opis siódmego todosa",
-                    Comment = "Prawie zrobione",
-                    Priority = 2,
-                    Title = "Mój siódmy todo",
+                    Finish_Time = DateTime.Now.AddDays(2),
+                    Description = "Drugi todos Stasia",
+                    Comment = "To jest komentarz",
+                    Priority = 1,
+                    Title = "Stas- ćwiczenia",
                     Done = false,
-                    User_Id = 3
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[2],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[1],
+                            IsOwner = false,
+                        }
+                    }
+                },
+                new Todo
+                {
+                    Category = 1,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(5),
+                    Description = "Pierwszy todos Marka",
+                    Comment = "To jest komentarz",
+                    Priority = 2,
+                    Title = "Marek- zakupy",
+                    Done = true,
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[3],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[2],
+                            IsOwner = false,
+                        }
+                    }
+                },
+                new Todo
+                {
+                    Category = 2,
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(5),
+                    Description = "Drugi todos Marka",
+                    Comment = "To jest komentarz",
+                    Priority = 2,
+                    Title = "Marek- ćwiczenia",
+                    Done = false,
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[1],
+                            IsOwner = false,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[3],
+                            IsOwner = true,
+                        }
+                    }
                 },
             };
-
-            await context.Todos.AddRangeAsync(todos);
-            await context.SaveChangesAsync();
+                await context.Todos.AddRangeAsync(todos);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

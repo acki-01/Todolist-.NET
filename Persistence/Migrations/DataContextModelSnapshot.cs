@@ -49,9 +49,6 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Updated_At")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("User_Id")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.ToTable("Todos");
