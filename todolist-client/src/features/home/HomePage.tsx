@@ -9,7 +9,15 @@ import RegisterForm from "../users/RegisterForm";
 function HomePage() {
   const { userStore, modalStore } = useStore();
   return (
-    <Row style={{ marginTop: "7em" }}>
+    <div
+      style={{
+        display: "flex",
+        minHeight: "700px",
+        alignItems: "center",
+        flexDirection: "column",
+        marginTop: "150px",
+      }}
+    >
       <h1>Home page</h1>
       {userStore.isLoggedIn ? (
         <>
@@ -17,17 +25,31 @@ function HomePage() {
           <Link to={"/todos"}>Todos</Link>
         </>
       ) : (
-        <h3>
-          Go to{" "}
-          <Button onClick={() => modalStore.openModal(<LoginForm />)}>
-            Login
-          </Button>
-          <Button onClick={() => modalStore.openModal(<RegisterForm />)}>
-            Registration
-          </Button>
-        </h3>
+        <>
+          <h3 style={{ textAlign: "center", marginBottom: "10px" }}>Please:</h3>
+          <div
+            style={{
+              width: "300px",
+              justifyContent: "space-between",
+              display: "flex",
+            }}
+          >
+            <Button
+              style={{ width: "120px" }}
+              onClick={() => modalStore.openModal(<LoginForm />)}
+            >
+              Login
+            </Button>
+            <Button
+              style={{ width: "120px" }}
+              onClick={() => modalStore.openModal(<RegisterForm />)}
+            >
+              Register
+            </Button>
+          </div>
+        </>
       )}
-    </Row>
+    </div>
   );
 }
 

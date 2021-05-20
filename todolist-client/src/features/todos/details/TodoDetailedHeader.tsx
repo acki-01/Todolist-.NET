@@ -1,46 +1,52 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Button, Image, Card, Typography } from "antd";
-import { Todo } from "../../../app/models/todo";
-import { DeleteOutlined } from "@ant-design/icons";
+import { TodoWithParticipants } from "../../../app/models/todo";
 import { Link } from "react-router-dom";
 
 const activityImageStyle = {
   filter: "brightness(30%)",
+  height: "400px",
 };
 
 interface Props {
-  todo: Todo;
-}
-
-interface Props {
-  todo: Todo;
+  todo: TodoWithParticipants;
 }
 
 function TodoDetailedHeader({ todo }: Props) {
   return (
     <Card
+      style={{ padding: "24px" }}
       cover={
         <Image
           style={activityImageStyle}
-          src={"/assets/categoryImages/sports.jpg"}
+          src={`/assets/categoryImages/${todo.category.type}.jpg`}
         />
       }
-      title={<Typography.Title>{todo.title}</Typography.Title>}
+      title={
+        <>
+          <Typography.Title>{todo.title}</Typography.Title>
+          <Typography.Paragraph>
+            Owned by{" "}
+            <strong>
+              <Link to={`/profiles/${todo.owner?.userName}`}>
+                {todo.owner?.displayName}
+              </Link>
+            </strong>
+          </Typography.Paragraph>
+        </>
+      }
     >
       <div
         style={{
           display: "flex",
           justifyContent: "space-evenly",
-          width: "75%",
+          width: "40%",
         }}
       >
-        <Button type={"primary"}>Share Todo</Button>
+        <Button type={"primary"}>Add participant</Button>
         <Button>
-          <Link to={`/manage/${todo.id}`}>{"Manage Todo"}</Link>
-        </Button>
-        <Button danger icon={<DeleteOutlined />}>
-          Cancel Share
+          <Link to={`/manage/${todo.id}`}>{"Edit Todo"}</Link>
         </Button>
       </div>
     </Card>

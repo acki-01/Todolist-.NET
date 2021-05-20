@@ -33,7 +33,7 @@ namespace Application.Todos
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var todo = await _context.Todos.Include(t => t.Participants).ThenInclude(participant => participant.User).FirstOrDefaultAsync(user => user.Id == request.Id);
+                var todo = await _context.Todos.Include(t => t.Participants).ThenInclude(u => u.User).FirstOrDefaultAsync(user => user.Id == request.Id);
                 if (todo == null) return null;
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUsername());
 
@@ -42,11 +42,6 @@ namespace Application.Todos
                 var ownerUserName = todo.Participants.FirstOrDefault(p => p.IsOwner)?.User?.UserName;
 
                 var participation = todo.Participants.FirstOrDefault(p => p.User.UserName == user.UserName);
-
-                if(participation != null && ownerUserName != user.UserName)
-                {
-                    todo.Participants.Remove(participation);
-                }
 
                 if(participation == null)
                 {

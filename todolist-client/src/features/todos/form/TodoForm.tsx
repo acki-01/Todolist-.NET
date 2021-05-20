@@ -10,14 +10,14 @@ import * as Yup from "yup";
 import TextInput from "../../../app/common/form/TextInput";
 import TextAreaInput from "../../../app/common/form/TextAreaInput";
 import SelectInput from "../../../app/common/form/SelectInput";
-import { categoryOptions } from "../../../app/models/categoryOptions";
+import { Category } from "../../../app/models/category";
 import DateInput from "../../../app/common/form/DateInput";
-import { Todo } from "../../../app/models/todo";
+import { Todo, TodoDTO, TodoWithParticipants } from "../../../app/models/todo";
 import { history } from "../../../index";
 import { v4 as uuid } from "uuid";
 
 function TodoForm() {
-  const { todoStore } = useStore();
+  const { todoStore, categoryStore } = useStore();
   const {
     loading,
     loadTodo,
@@ -25,20 +25,23 @@ function TodoForm() {
     createTodo,
     updateTodo,
   } = todoStore;
+  const { loadCategories, categoriesRegistry, categoriesTypes } = categoryStore;
   const { id } = useParams<{ id: string }>();
+  useEffect(() => {
+    if (categoriesRegistry.size <= 1) loadCategories();
+  }, [categoriesRegistry.size, loadCategories]);
 
-  const [todo, setTodo] = useState<Todo>({
+  const [todo, setTodo] = useState<TodoWithParticipants>({
     id: "",
     title: "",
     description: "",
     comment: "",
-    category: 1,
+    category: categoriesTypes[0],
     priority: 1,
     created_At: null,
     updated_At: null,
     finish_Time: null,
     done: false,
-    user_Id: 0,
   });
 
   const validationSchema = Yup.object({
@@ -50,28 +53,25 @@ function TodoForm() {
 
   useEffect(() => {
     if (id) {
-      loadTodo(id).then((activity) => setTodo(activity!));
+      loadTodo(id).then((todo) => setTodo(todo!));
     }
   }, [id, loadTodo]);
 
-  function handleForSubmit(todo: Todo) {
+  function handleForSubmit(todo: TodoWithParticipants) {
+    let newTodo = {
+      ...new TodoDTO(todo),
+      category: categoriesRegistry.get(todo.category),
+    };
     if (todo.id.length === 0) {
-      let newTodo = {
-        ...todo,
+      newTodo = {
+        ...newTodo,
         id: uuid(),
       };
       createTodo(newTodo).then(() => history.push(`/todos/${newTodo.id}`));
     } else {
-      updateTodo(todo).then(() => history.push(`/todos/${todo.id}`));
+      updateTodo(newTodo).then(() => history.push(`/todos/${todo.id}`));
     }
   }
-  //
-  // function handleInputChange(
-  //   ev: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) {
-  //   const { name, value } = ev.target;
-  //   setTodo({ ...todo, [name]: value });
-  // }
 
   if (loadingInitial) return <LoaderIndicator content={"Loading todo..."} />;
   return (
@@ -93,7 +93,7 @@ function TodoForm() {
             />
 
             <SelectInput
-              options={categoryOptions}
+              options={categoriesTypes}
               placeholder={"Category"}
               name={"category"}
             />

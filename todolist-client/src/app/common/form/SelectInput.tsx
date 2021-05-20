@@ -1,7 +1,7 @@
 import React from "react";
 import { useField } from "formik";
-import { Form, Typography } from "antd";
-import { Select } from "antd";
+import { Typography } from "antd";
+import { Select, Form } from "semantic-ui-react";
 
 interface Props {
   placeholder: string;
@@ -12,20 +12,21 @@ interface Props {
 
 export default function SelectInput(props: Props) {
   const [field, meta, helpers] = useField(props.name);
+  console.log(field.value);
   return (
-    <Form.Item>
+    <Form.Field>
       <label>{props.label}</label>
       <Select
-        allowClear
+        clearable
         options={props.options}
         value={field.value || null}
-        onChange={(value) => helpers.setValue(value)}
+        onChange={(e, d) => helpers.setValue(d.value)}
         onBlur={() => helpers.setTouched(true)}
         placeholder={props.placeholder}
       />
       {meta.touched && meta.error && (
         <Typography.Paragraph type="danger">{meta.error}</Typography.Paragraph>
       )}
-    </Form.Item>
+    </Form.Field>
   );
 }

@@ -1,12 +1,19 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Todo } from "../models/todo";
+import { Todo, TodoWithParticipants } from "../models/todo";
 import agent from "../api/agent";
 import { format } from "date-fns";
+import { store } from "./store";
+
+export enum SORT_TYPES {
+  ALL = "ALL",
+  DONE = "DONE",
+  UNDONE = "UNDONE",
+}
 
 export default class TodoStore {
-  todos: Todo[] = [];
-  todoRegistry = new Map<string, Todo>();
-  selectedTodo: Todo | undefined = undefined;
+  todos: TodoWithParticipants[] = [];
+  todoRegistry = new Map<string, TodoWithParticipants>();
+  selectedTodo: TodoWithParticipants | undefined = undefined;
   editMode = false;
   loading = false;
   loadingInitial = false;
@@ -24,17 +31,20 @@ export default class TodoStore {
   get groupedTodos() {
     return Object.entries(
       this.todosByDate.reduce((todos, todo) => {
-        const date = format(todo.finish_Time!, "dd MMM yyyy");
+        const date = format(todo.updated_At!, "dd MMM yyyy");
         todos[date] = todos[date] ? [...todos[date], todo] : [todo];
         return todos;
       }, {} as { [key: string]: Todo[] })
     );
   }
 
-  loadTodos = async () => {
+  loadTodos = async (sortBy: SORT_TYPES = SORT_TYPES.ALL) => {
     this.loadingInitial = true;
     try {
-      const todos = await agent.Todos.list();
+      const todos = await agent.Todos.list(sortBy);
+      if (this.todoRegistry.size) {
+        this.todoRegistry.clear();
+      }
       runInAction(() => {
         todos.forEach((todo) => {
           this.setTodo(todo);
@@ -73,7 +83,14 @@ export default class TodoStore {
     }
   };
 
-  private setTodo = (todo: Todo) => {
+  private setTodo = (todo: TodoWithParticipants) => {
+    const user = store.userStore.user;
+    if (user) {
+      todo.isOwner = todo.ownerName === user.userName;
+      todo.owner = todo.participants?.find(
+        (participant) => participant.userName === todo.ownerName
+      );
+    }
     todo.created_At = new Date(todo.created_At!);
     todo.updated_At = new Date(todo.created_At!);
     todo.finish_Time = new Date(todo.finish_Time!);

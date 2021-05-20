@@ -9,11 +9,11 @@ import TodoFilters from "./TodoFilters";
 function TodoDashboard() {
   const { todoStore } = useStore();
   const { loadTodos, todoRegistry } = todoStore;
+  console.log(todoRegistry);
 
   useEffect(() => {
     if (todoRegistry.size <= 1) loadTodos();
   }, [todoRegistry.size, loadTodos]);
-
   if (todoStore.loadingInitial)
     return <LoaderIndicator content={"Loading todos..."} />;
   return (

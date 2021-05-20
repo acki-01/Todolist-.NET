@@ -6,8 +6,6 @@ import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import TodoDetailedHeader from "./TodoDetailedHeader";
 import TodoDetailedInfo from "./TodoDetailedInfo";
-import TodoDetailedComments from "./TodoDetailedComments";
-import TodoDetailedSidebar from "./TodoDetailedSidebar";
 
 function TodoDetails() {
   const { todoStore } = useStore();
@@ -25,11 +23,7 @@ function TodoDetails() {
         <Space direction="vertical">
           <TodoDetailedHeader todo={todo} />
           <TodoDetailedInfo todo={todo} />
-          <TodoDetailedComments />
         </Space>
-      </Col>
-      <Col span={"6"}>
-        <TodoDetailedSidebar />
       </Col>
     </Row>
   );

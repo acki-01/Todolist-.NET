@@ -11,10 +11,10 @@ namespace API.Controllers
     public class TodosController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> GetTodos()
+        public async Task<IActionResult> GetTodos(string sortBy)
 
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandleResult(await Mediator.Send(new List.Query { SortBy = sortBy }));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTodo(Guid id)

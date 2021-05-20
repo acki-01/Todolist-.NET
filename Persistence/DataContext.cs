@@ -11,6 +11,7 @@ namespace Persistence
         }
         public DbSet<Todo> Todos { get; set; }
         public DbSet<TodoParticipant> TodoParticipants { get; set; }
+        public DbSet<Category> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

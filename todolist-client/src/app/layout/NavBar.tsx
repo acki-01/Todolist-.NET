@@ -47,7 +47,7 @@ function NavBar() {
               <Menu>
                 <Menu.Item>
                   <Button>
-                    <NavLink to={`/profile/${user?.username}`}>
+                    <NavLink to={`/profile/${user?.userName}`}>
                       {"My profile"}
                     </NavLink>
                   </Button>

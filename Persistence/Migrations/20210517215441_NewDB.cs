@@ -49,23 +49,15 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Todos",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Comment = table.Column<string>(type: "TEXT", nullable: true),
-                    Category = table.Column<int>(type: "INTEGER", nullable: false),
-                    Priority = table.Column<int>(type: "INTEGER", nullable: false),
-                    Created_At = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated_At = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Finish_Time = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Done = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Type = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Todos", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,8 +167,33 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Todo
-                ",
+                name: "Todos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Comment = table.Column<string>(type: "TEXT", nullable: true),
+                    CategoryId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    Priority = table.Column<int>(type: "INTEGER", nullable: false),
+                    Created_At = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated_At = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Finish_Time = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Done = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Todos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Todos_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TodoParticipants",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
@@ -241,6 +258,11 @@ namespace Persistence.Migrations
                 name: "IX_TodoParticipants_TodoId",
                 table: "TodoParticipants",
                 column: "TodoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Todos_CategoryId",
+                table: "Todos",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -271,6 +293,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Todos");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

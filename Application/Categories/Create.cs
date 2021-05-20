@@ -9,53 +9,42 @@ using Persistence;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Todos
+namespace Application.Categories
 {
     public class Create
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Todo Todo { get; set; }
+            public Category Category { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Todo).SetValidator(new TodoValidator());
+                RuleFor(x => x.Category).SetValidator(new CategoryValidator());
             }
         }          
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            public Handler(DataContext context)
             {
                 _context = context;
-                _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                var category = await _context.Categories.FirstOrDefaultAsync(x => x.Type == request.Category.Type);
+                if(category != null) return Result<Unit>.Failure("Category already exists");
 
-                var participant = new TodoParticipant
-                {
-                    User = user,
-                    Todo = request.Todo,
-                    IsOwner = true
-                };
-
-                request.Todo.Participants.Add(participant);
-                request.Todo.Category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == request.Todo.Category.Id);
-
-                _context.Todos.Add(request.Todo);
+                _context.Categories.Add(request.Category);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create todo");
+                if (!result) return Result<Unit>.Failure("Failed to create category");
 
                 return Result<Unit>.Success(Unit.Value);
             }

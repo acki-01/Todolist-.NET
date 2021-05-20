@@ -11,7 +11,7 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context, UserManager<User> userManager)
         {
-            if (!userManager.Users.Any() && !context.Todos.Any())
+            if (!userManager.Users.Any() && !context.Todos.Any() && !context.Categories.Any())
             {
                 var users = new List<User>
                 {
@@ -26,18 +26,26 @@ namespace Persistence
                     await userManager.CreateAsync(user, "B@ardzoTrudne1");
                 }
 
+                var categories = new List<Category>
+                {
+                    new Category{Id = new Guid(), Type = "Study"},
+                    new Category{Id = new Guid(), Type = "Body Care"},
+                    new Category{Id = new Guid(), Type = "People"},
+                    new Category{Id = new Guid(), Type = "Daily Stuff"},
+                };
+
             var todos = new List<Todo>
             {
                 new Todo
                 {
-                    Category = 1,
+                    Category = categories[3],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Pierwszy todos Janka", 
+                    Description = "Ziemniaki, mięso, pomidory", 
                     Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Janek- zakupy",
+                    Title = "Zakupy na obiad",
                     Done = true,
                     Participants = new List<TodoParticipant>
                     {
@@ -55,14 +63,14 @@ namespace Persistence
                 },
                 new Todo
                 {
-                    Category = 2,
+                    Category = categories[1],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(2),
-                    Description = "Drugi todos Janka",
+                    Description = "Push góra",
                     Comment = "To jest komentarz",
                     Priority = 1,
-                    Title = "Janek- ćwiczenia",
+                    Title = "FBW- ćwiczenia",
                     Done = false,
                     Participants = new List<TodoParticipant>
                     {
@@ -80,14 +88,14 @@ namespace Persistence
                 },
                 new Todo
                 {
-                    Category = 1,
+                    Category = categories[3],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Pierwszy todos Arka",
+                    Description = "Cokolwiek do zjedzenia",
                     Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Arek- zakupy",
+                    Title = "Zakupy",
                     Done = true,
                     Participants = new List<TodoParticipant>
                     {
@@ -105,14 +113,64 @@ namespace Persistence
                 },
                 new Todo
                 {
-                    Category = 2,
+                    Category = categories[2],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Drugi todos Arka",
+                    Description = "Nad Wisełkę",
                     Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Arek- ćwiczenia",
+                    Title = "Wypad na pi...sok",
+                    Done = true,
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[1],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[2],
+                            IsOwner = false,
+                        }
+                    }
+                },
+                new Todo
+                {
+                    Category = categories[0],
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(10),
+                    Description = "Pilnie uczyć się .NET",
+                    Comment = "To jest komentarz",
+                    Priority = 1,
+                    Title = ".NET",
+                    Done = true,
+                    Participants = new List<TodoParticipant>
+                    {
+                        new TodoParticipant
+                        {
+                            User = users[1],
+                            IsOwner = true,
+                        },
+                        new TodoParticipant
+                        {
+                            User = users[2],
+                            IsOwner = false,
+                        }
+                    }
+                },
+                new Todo
+                {
+                    Category = categories[1],
+                    Created_At = DateTime.Now,
+                    Updated_At = DateTime.Now,
+                    Finish_Time = DateTime.Now.AddDays(5),
+                    Description = "Bieżnia",
+                    Comment = "To jest komentarz",
+                    Priority = 2,
+                    Title = "Ćwiczenia",
                     Done = false,
                     Participants = new List<TodoParticipant>
                     {
@@ -130,14 +188,14 @@ namespace Persistence
                 },
                  new Todo
                 {
-                    Category = 1,
+                    Category = categories[3],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Pierwszy todos Stasia",
+                    Description = "Kaszanka, dżem, mortadela",
                     Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Stas- zakupy",
+                    Title = "Zakupy",
                     Done = true,
                     Participants = new List<TodoParticipant>
                     {
@@ -155,14 +213,14 @@ namespace Persistence
                 },
                 new Todo
                 {
-                    Category = 2,
+                    Category = categories[1],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(2),
-                    Description = "Drugi todos Stasia",
+                    Description = "Rower, bieżnia",
                     Comment = "To jest komentarz",
                     Priority = 1,
-                    Title = "Stas- ćwiczenia",
+                    Title = "Siłownia cardio",
                     Done = false,
                     Participants = new List<TodoParticipant>
                     {
@@ -180,14 +238,14 @@ namespace Persistence
                 },
                 new Todo
                 {
-                    Category = 1,
+                    Category = categories[3],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Pierwszy todos Marka",
+                    Description = "Chleb, jajka, warzywa",
                     Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Marek- zakupy",
+                    Title = "Zakupy",
                     Done = true,
                     Participants = new List<TodoParticipant>
                     {
@@ -205,14 +263,14 @@ namespace Persistence
                 },
                 new Todo
                 {
-                    Category = 2,
+                    Category = categories[1],
                     Created_At = DateTime.Now,
                     Updated_At = DateTime.Now,
                     Finish_Time = DateTime.Now.AddDays(5),
-                    Description = "Drugi todos Marka",
+                    Description = "Pull dół",
                     Comment = "To jest komentarz",
                     Priority = 2,
-                    Title = "Marek- ćwiczenia",
+                    Title = "Siłownia",
                     Done = false,
                     Participants = new List<TodoParticipant>
                     {

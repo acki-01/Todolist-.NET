@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { Todo } from "../../../app/models/todo";
+import { TodoWithParticipants } from "../../../app/models/todo";
 import { Card, Divider, Row, Space, Tag } from "antd";
 import {
   ClockCircleOutlined,
@@ -32,7 +32,7 @@ const priorities: priorityTypes = {
 };
 
 interface Props {
-  todo: Todo;
+  todo: TodoWithParticipants;
 }
 
 function TodoDetailedInfo({ todo }: Props) {

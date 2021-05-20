@@ -8,7 +8,6 @@ import Text from "antd/es/typography/Text";
 function TodoList() {
   const { todoStore } = useStore();
   const { groupedTodos } = todoStore;
-
   return (
     <>
       {groupedTodos.map(([group, todos]) => (

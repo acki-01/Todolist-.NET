@@ -15,7 +15,7 @@ function RegisterForm() {
         email: "",
         password: "",
         displayName: "",
-        username: "",
+        userName: "",
         error: null,
       }}
       onSubmit={(values, { setErrors }) =>
@@ -23,7 +23,7 @@ function RegisterForm() {
       }
       validationSchema={Yup.object({
         displayName: Yup.string().required(),
-        username: Yup.string().required(),
+        userName: Yup.string().required(),
         email: Yup.string().required().email(),
         password: Yup.string().required(),
       })}
@@ -37,7 +37,7 @@ function RegisterForm() {
           <Typography.Title>Sign up to Todos</Typography.Title>
           <TextInput placeholder={"Email"} name={"email"} />
           <TextInput placeholder={"Display Name"} name={"displayName"} />
-          <TextInput placeholder={"username"} name={"username"} />
+          <TextInput placeholder={"username"} name={"userName"} />
           <TextInput
             placeholder={"Password"}
             name={"password"}

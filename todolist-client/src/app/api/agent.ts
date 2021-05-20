@@ -1,9 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Todo } from "../models/todo";
+import { Todo, TodoWithParticipants } from "../models/todo";
 import { toast } from "react-toastify";
 import { history } from "../../index";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
+import { Category } from "../models/category";
+import { SORT_TYPES } from "../stores/todoStore";
+import { object } from "yup";
 
 axios.defaults.baseURL = "http://localhost:5000/";
 
@@ -59,17 +62,20 @@ axios.interceptors.response.use(
 const resBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
-  get: <T>(url: string) => axios.get<T>(url).then(resBody),
+  get: <T>(url: string, params?: object) =>
+    axios.get<T>(url, params).then(resBody),
   post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(resBody),
   put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(resBody),
   delete: <T>(url: string) => axios.delete<T>(url).then(resBody),
 };
 
 export const Todos = {
-  list: () => requests.get<Todo[]>("/todos"),
+  list: (sortBy: SORT_TYPES) =>
+    requests.get<TodoWithParticipants[]>("/todos", { params: { sortBy } }),
   details: (id: string) => requests.get<Todo>(`/todos/${id}`),
-  create: (todo: Todo) => requests.post<void>("/todos", todo),
-  update: (todo: Todo) => requests.put<void>(`/todos/${todo.id}`, todo),
+  create: (todo: TodoWithParticipants) => requests.post<void>("/todos", todo),
+  update: (todo: TodoWithParticipants) =>
+    requests.put<void>(`/todos/${todo.id}`, todo),
   delete: (id: string) => requests.delete<void>(`/todos/${id}`),
 };
 
@@ -80,9 +86,18 @@ const Account = {
     requests.post<User>("/user/register", user),
 };
 
+const Categories = {
+  list: () => requests.get<Category[]>("/categories"),
+  create: (category: Category) => requests.post<void>("/categories", category),
+  update: (category: Category) =>
+    requests.put<void>(`/categories/${category.id}`, category),
+  delete: (id: string) => requests.delete<void>(`/categories/${id}`),
+};
+
 const agent = {
   Todos,
   Account,
+  Categories,
 };
 
 export default agent;
