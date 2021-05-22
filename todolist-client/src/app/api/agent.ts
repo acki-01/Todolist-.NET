@@ -6,7 +6,6 @@ import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Category } from "../models/category";
 import { SORT_TYPES } from "../stores/todoStore";
-import { object } from "yup";
 
 axios.defaults.baseURL = "http://localhost:5000/";
 

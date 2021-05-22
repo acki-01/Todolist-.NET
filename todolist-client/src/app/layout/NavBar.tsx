@@ -9,7 +9,6 @@ import {
 } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
-import SubMenu from "antd/es/menu/SubMenu";
 
 function NavBar() {
   const {

@@ -45,7 +45,7 @@ function TodoDetailedHeader({ todo }: Props) {
         }}
       >
         <Button type={"primary"}>Add participant</Button>
-        <Button>
+        <Button disabled={!todo.isOwner}>
           <Link to={`/manage/${todo.id}`}>{"Edit Todo"}</Link>
         </Button>
       </div>

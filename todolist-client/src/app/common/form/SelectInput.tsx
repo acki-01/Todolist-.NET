@@ -12,7 +12,6 @@ interface Props {
 
 export default function SelectInput(props: Props) {
   const [field, meta, helpers] = useField(props.name);
-  console.log(field.value);
   return (
     <Form.Field>
       <label>{props.label}</label>

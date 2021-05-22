@@ -10,13 +10,17 @@ export interface Todo {
   updated_At: Date | null;
   finish_Time: Date | null;
   done: boolean;
+  ownerName?: string;
+  participants?: Profile[];
+  owner?: Profile;
+  isOwner?: boolean;
+  category?: any;
 }
 
 export interface TodoWithParticipants extends Todo {
   ownerName?: string;
   participants?: Profile[];
   owner?: Profile;
-  isOwner?: boolean;
   category?: any;
 }
 
@@ -30,6 +34,7 @@ export class TodoDTO implements Todo {
   updated_At: Date | null;
   finish_Time: Date | null;
   done: boolean;
+
   constructor(todo: Todo) {
     this.id = todo.id;
     this.title = todo.title;

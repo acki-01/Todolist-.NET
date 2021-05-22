@@ -101,6 +101,7 @@ function TodoListItem({ todo }: Props) {
         </Typography.Paragraph>
         <Divider />
         <Button
+          disabled={!todo.isOwner}
           onClick={(e) => {
             e.stopPropagation();
             deleteTodo(todo.id);

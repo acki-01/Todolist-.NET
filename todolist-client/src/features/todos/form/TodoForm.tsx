@@ -67,9 +67,9 @@ function TodoForm() {
         ...newTodo,
         id: uuid(),
       };
-      createTodo(newTodo).then(() => history.push(`/todos/${newTodo.id}`));
+      createTodo(newTodo);
     } else {
-      updateTodo(newTodo).then(() => history.push(`/todos/${todo.id}`));
+      updateTodo(newTodo);
     }
   }
 

@@ -3,6 +3,7 @@ import { Todo, TodoWithParticipants } from "../models/todo";
 import agent from "../api/agent";
 import { format } from "date-fns";
 import { store } from "./store";
+import { message } from "antd";
 
 export enum SORT_TYPES {
   ALL = "ALL",
@@ -107,12 +108,15 @@ export default class TodoStore {
     todo.updated_At = new Date();
     try {
       await agent.Todos.create(todo);
+      window.location.href = `/todos/${todo.id}`;
+      message.success("Todo created successfully", 10);
       runInAction(() => {
         this.todoRegistry.set(todo.id, todo);
         this.selectedTodo = todo;
         this.editMode = false;
       });
     } catch (e) {
+      message.error(`Problem with adding. Error: ${e.message}`, 10);
       console.log(e);
     } finally {
       runInAction(() => {
@@ -126,12 +130,15 @@ export default class TodoStore {
     todo.updated_At = new Date();
     try {
       await agent.Todos.update(todo);
+      window.location.href = `/todos/${todo.id}`;
+      message.success("Todo updated successfully", 10);
       runInAction(() => {
         this.todoRegistry.set(todo.id, todo);
         this.selectedTodo = todo;
         this.editMode = false;
       });
     } catch (e) {
+      message.error(`Problem with updating. Error: ${e.message}`, 10);
       console.log(e);
     } finally {
       runInAction(() => {
@@ -144,10 +151,12 @@ export default class TodoStore {
     this.loading = true;
     try {
       await agent.Todos.delete(id);
+      message.success("Todo deleted successfully", 10);
       runInAction(() => {
         this.todoRegistry.delete(id);
       });
     } catch (e) {
+      message.error(`Problem with deleting. Error: ${e.message}`, 10);
       console.log(e);
     } finally {
       runInAction(() => {
