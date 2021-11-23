@@ -34,6 +34,13 @@ namespace Persistence
                     new Category{Id = new Guid(), Type = "Daily Stuff"},
                 };
 
+                var priorities = new List<Priority>
+                {
+                    new Priority{Id = new Guid(), Type = 1},
+                    new Priority{Id = new Guid(), Type = 2},
+                    new Priority{Id = new Guid(), Type = 3}
+                };
+
             var todos = new List<Todo>
             {
                 new Todo
@@ -44,7 +51,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Ziemniaki, mięso, pomidory", 
                     Comment = "To jest komentarz",
-                    Priority = 2,
+                    Priority = priorities[2],
                     Title = "Zakupy na obiad",
                     Done = true,
                     Participants = new List<TodoParticipant>
@@ -69,7 +76,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(2),
                     Description = "Push góra",
                     Comment = "To jest komentarz",
-                    Priority = 1,
+                    Priority = priorities[1],
                     Title = "FBW- ćwiczenia",
                     Done = false,
                     Participants = new List<TodoParticipant>
@@ -94,7 +101,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Cokolwiek do zjedzenia",
                     Comment = "To jest komentarz",
-                    Priority = 2,
+                    Priority = priorities[2],
                     Title = "Zakupy",
                     Done = true,
                     Participants = new List<TodoParticipant>
@@ -119,7 +126,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Nad Wisełkę",
                     Comment = "To jest komentarz",
-                    Priority = 2,
+                    Priority = priorities[2],
                     Title = "Wypad na pi...sok",
                     Done = true,
                     Participants = new List<TodoParticipant>
@@ -144,7 +151,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(10),
                     Description = "Pilnie uczyć się .NET",
                     Comment = "To jest komentarz",
-                    Priority = 1,
+                    Priority = priorities[1],
                     Title = ".NET",
                     Done = true,
                     Participants = new List<TodoParticipant>
@@ -169,7 +176,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Bieżnia",
                     Comment = "To jest komentarz",
-                    Priority = 2,
+                    Priority = priorities[2],
                     Title = "Ćwiczenia",
                     Done = false,
                     Participants = new List<TodoParticipant>
@@ -194,7 +201,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Kaszanka, dżem, mortadela",
                     Comment = "To jest komentarz",
-                    Priority = 2,
+                    Priority = priorities[2],
                     Title = "Zakupy",
                     Done = true,
                     Participants = new List<TodoParticipant>
@@ -219,7 +226,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(2),
                     Description = "Rower, bieżnia",
                     Comment = "To jest komentarz",
-                    Priority = 1,
+                    Priority = priorities[1],
                     Title = "Siłownia cardio",
                     Done = false,
                     Participants = new List<TodoParticipant>
@@ -244,7 +251,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Chleb, jajka, warzywa",
                     Comment = "To jest komentarz",
-                    Priority = 2,
+                    Priority = priorities[2],
                     Title = "Zakupy",
                     Done = true,
                     Participants = new List<TodoParticipant>
@@ -269,7 +276,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Pull dół",
                     Comment = "To jest komentarz",
-                    Priority = 2,
+                    Priority = priorities[2],
                     Title = "Siłownia",
                     Done = false,
                     Participants = new List<TodoParticipant>

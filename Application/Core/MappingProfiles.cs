@@ -11,6 +11,7 @@ namespace Application.Core
         {
             CreateMap<Todo, Todo>();
             CreateMap<Category, Category>();
+            CreateMap<Priority, Priority>();
             CreateMap<Todo, TodoDTO>().ForMember(dest => dest.OwnerName, opt => opt.MapFrom(source => source.Participants.FirstOrDefault(participant => participant.IsOwner).User.UserName));
             CreateMap<TodoParticipant, Profiles.Profile>()
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(source => source.User.DisplayName))
