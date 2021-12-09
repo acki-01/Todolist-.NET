@@ -1,7 +1,5 @@
-import React from "react";
-import { Button, Divider, Dropdown, Menu, Typography } from "antd";
+import { Button, Menu, Typography } from "antd";
 import { NavLink } from "react-router-dom";
-import { Header } from "antd/es/layout/layout";
 import {
   CheckCircleTwoTone,
   DownOutlined,
@@ -9,39 +7,46 @@ import {
 } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
+import {
+  StyledHeader,
+  StyledMenuElements,
+  StyledMenu,
+  StyledNavLink,
+  StyledDropdown,
+} from "./styled";
 
 function NavBar() {
   const {
     userStore: { user, logout },
   } = useStore();
   return (
-    <Header>
-      <Menu theme="dark" mode="horizontal">
+    <StyledHeader>
+      <StyledMenu theme="dark" mode="horizontal">
+        <StyledMenuElements>
+          <Menu.Item>
+            <StyledNavLink
+              to={"/"}
+              exact
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <CheckCircleTwoTone style={{ fontSize: "36px" }} />
+              Todos App
+            </StyledNavLink>
+          </Menu.Item>
+          <NavLink to={"/todos"}>Todo</NavLink>
+          <NavLink to={"/errors"}>Errors</NavLink>
+          <Menu.Item>
+            <Button>
+              <NavLink to={"/createTodo"}>Create Todo</NavLink>
+            </Button>
+          </Menu.Item>
+        </StyledMenuElements>
         <Menu.Item>
-          <NavLink
-            to={"/"}
-            exact
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <CheckCircleTwoTone style={{ fontSize: "36px" }} />
-            Todos App
-          </NavLink>
-        </Menu.Item>
-        <Divider type={"vertical"} />
-        <NavLink to={"/todos"}>Todo</NavLink>
-        <Divider type={"vertical"} />
-        <NavLink to={"/errors"}>Errors</NavLink>
-        <Menu.Item>
-          <Button>
-            <NavLink to={"/createTodo"}>Create Todo</NavLink>
-          </Button>
-        </Menu.Item>
-        <Menu.Item>
-          <Dropdown
+          <StyledDropdown
             overlay={
               <Menu>
                 <Menu.Item>
@@ -63,10 +68,10 @@ function NavBar() {
               {user?.displayName}
               <DownOutlined />
             </Typography.Text>
-          </Dropdown>
+          </StyledDropdown>
         </Menu.Item>
-      </Menu>
-    </Header>
+      </StyledMenu>
+    </StyledHeader>
   );
 }
 

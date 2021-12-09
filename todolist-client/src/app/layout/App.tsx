@@ -7,7 +7,6 @@ import { Route, useLocation, Switch } from "react-router-dom";
 import HomePage from "../../features/home/HomePage";
 import TodoForm from "../../features/todos/form/TodoForm";
 import TodoDetails from "../../features/todos/details/TodoDetails";
-import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import TestError from "../../features/errors/TestError";
 import { ToastContainer } from "react-toastify";
@@ -17,6 +16,7 @@ import LoginForm from "../../features/users/LoginForm";
 import { useStore } from "../stores/store";
 import LoaderIndicator from "./LoaderIndicator";
 import ModalContainer from "../common/modals/ModalContainer";
+import { StyledLayout } from "./styled";
 
 function App() {
   const location = useLocation();
@@ -34,7 +34,7 @@ function App() {
     return <LoaderIndicator content={"Loading app..."} />;
 
   return (
-    <Layout>
+    <StyledLayout>
       <ToastContainer position={"bottom-right"} hideProgressBar />
       <ModalContainer />
       <Route exact path={"/"} component={HomePage} />
@@ -61,7 +61,7 @@ function App() {
           </>
         )}
       />
-    </Layout>
+    </StyledLayout>
   );
 }
 

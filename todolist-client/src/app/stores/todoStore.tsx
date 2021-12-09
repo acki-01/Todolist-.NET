@@ -69,6 +69,7 @@ export default class TodoStore {
       this.loadingInitial = true;
       try {
         todo = await agent.Todos.details(id);
+
         this.setTodo(todo);
         runInAction(() => {
           this.selectedTodo = todo;

@@ -6,6 +6,7 @@ import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Category } from "../models/category";
 import { SORT_TYPES } from "../stores/todoStore";
+import { Priority } from "../models/priority";
 
 axios.defaults.baseURL = "http://localhost:5000/";
 
@@ -93,10 +94,19 @@ const Categories = {
   delete: (id: string) => requests.delete<void>(`/categories/${id}`),
 };
 
+const Priorities = {
+  list: () => requests.get<Priority[]>("/priorities"),
+  create: (priority: Priority) => requests.post<void>("/priorities", priority),
+  update: (priority: Priority) =>
+    requests.put<void>(`/priorities/${priority.id}`, priority),
+  delete: (id: Priority) => requests.delete<void>(`/priorities/${id}`),
+};
+
 const agent = {
   Todos,
   Account,
   Categories,
+  Priorities,
 };
 
 export default agent;

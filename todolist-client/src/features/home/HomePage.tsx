@@ -5,51 +5,38 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import LoginForm from "../users/LoginForm";
 import RegisterForm from "../users/RegisterForm";
+import {
+  Container,
+  Subtitle,
+  ButtonContainer,
+  StyledLink,
+  StyledSpan,
+} from "./styled";
+import bg from "./start/shia.jpg";
 
 function HomePage() {
   const { userStore, modalStore } = useStore();
   return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "700px",
-        alignItems: "center",
-        flexDirection: "column",
-        marginTop: "150px",
-      }}
-    >
-      <h1>Home page</h1>
+    <Container bg={bg}>
       {userStore.isLoggedIn ? (
-        <>
-          {"Hello"}
-          <Link to={"/todos"}>Todos</Link>
-        </>
+        <StyledLink to={"/todos"}>Todos</StyledLink>
       ) : (
         <>
-          <h3 style={{ textAlign: "center", marginBottom: "10px" }}>Please:</h3>
-          <div
-            style={{
-              width: "300px",
-              justifyContent: "space-between",
-              display: "flex",
-            }}
-          >
+          <Subtitle>Please:</Subtitle>
+          <ButtonContainer>
             <Button
-              style={{ width: "120px" }}
+              type="primary"
               onClick={() => modalStore.openModal(<LoginForm />)}
             >
               Login
             </Button>
-            <Button
-              style={{ width: "120px" }}
-              onClick={() => modalStore.openModal(<RegisterForm />)}
-            >
+            <Button onClick={() => modalStore.openModal(<RegisterForm />)}>
               Register
             </Button>
-          </div>
+          </ButtonContainer>
         </>
       )}
-    </div>
+    </Container>
   );
 }
 

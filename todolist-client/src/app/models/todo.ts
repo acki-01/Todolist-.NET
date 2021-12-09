@@ -1,11 +1,12 @@
 import { Profile } from "./profile";
+import { Priority } from "./priority";
 
 export interface Todo {
   id: string;
   title: string;
   description: string;
   comment: string;
-  priority: number;
+  priority?: any;
   created_At: Date | null;
   updated_At: Date | null;
   finish_Time: Date | null;
@@ -22,6 +23,7 @@ export interface TodoWithParticipants extends Todo {
   participants?: Profile[];
   owner?: Profile;
   category?: any;
+  priority?: any;
 }
 
 export class TodoDTO implements Todo {
@@ -29,7 +31,7 @@ export class TodoDTO implements Todo {
   title: string;
   description: string;
   comment: string;
-  priority: number;
+  priority: Priority;
   created_At: Date | null;
   updated_At: Date | null;
   finish_Time: Date | null;
