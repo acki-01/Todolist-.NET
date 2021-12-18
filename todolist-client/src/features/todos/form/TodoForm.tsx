@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { Link, useParams } from 'react-router-dom';
 import LoaderIndicator from '../../../app/layout/LoaderIndicator';
 import Card from 'antd/lib/card';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import { Form as FormContainer } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import TextInput from '../../../app/common/form/TextInput';
@@ -13,8 +13,7 @@ import TextAreaInput from '../../../app/common/form/TextAreaInput';
 import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
 import CheckboxInput from '../../../app/common/form/CheckboxInput';
-import { Todo, TodoDTO, TodoWithParticipants } from '../../../app/models/todo';
-import { history } from '../../../index';
+import { TodoDTO, TodoWithParticipants } from '../../../app/models/todo';
 import { v4 as uuid } from 'uuid';
 
 function TodoForm() {
@@ -75,6 +74,7 @@ function TodoForm() {
     }, [id, loadTodo]);
 
     function handleForSubmit(todo: TodoWithParticipants) {
+        console.log('DUPPPPA');
         let newTodo = {
             ...new TodoDTO(todo),
             category: categoriesRegistry.get(todo.category),
@@ -100,55 +100,55 @@ function TodoForm() {
                 enableReinitialize
             >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                    <Form onSubmit={handleSubmit} autoComplete={'off'}>
-                        <FormContainer>
-                            <TextInput placeholder={'Title'} name={'title'} />
+                    // <Form onSubmit={handleSubmit} autoComplete={'off'}>
+                    <FormContainer onSubmit={handleSubmit}>
+                        <TextInput placeholder={'Title'} name={'title'} />
 
-                            <TextAreaInput
-                                rows={3}
-                                placeholder={'Description'}
-                                name={'description'}
-                            />
+                        <TextAreaInput
+                            rows={3}
+                            placeholder={'Description'}
+                            name={'description'}
+                        />
 
-                            <SelectInput
-                                options={categoriesTypes}
-                                placeholder={'Category'}
-                                name={'category'}
-                            />
-                            <SelectInput
-                                options={prioritiesTypes}
-                                placeholder={'Priority'}
-                                name={'priority'}
-                            />
+                        <SelectInput
+                            options={categoriesTypes}
+                            placeholder={'Category'}
+                            name={'category'}
+                        />
+                        <SelectInput
+                            options={prioritiesTypes}
+                            placeholder={'Priority'}
+                            name={'priority'}
+                        />
 
-                            <DateInput
-                                placeholderText={'Finish Time'}
-                                name={'finish_Time'}
-                                showTimeSelect
-                                timeCaption={'time'}
-                                dateFormat={'MMMM d, yyyy h:mm aa'}
-                            />
-                            <CheckboxInput label={'Done'} name={'done'} />
+                        <DateInput
+                            placeholderText={'Finish Time'}
+                            name={'finish_Time'}
+                            showTimeSelect
+                            timeCaption={'time'}
+                            dateFormat={'MMMM d, yyyy h:mm aa'}
+                        />
+                        <CheckboxInput label={'Done'} name={'done'} />
 
-                            <TextAreaInput
-                                rows={2}
-                                placeholder={'Comment'}
-                                name={'comment'}
-                            />
+                        <TextAreaInput
+                            rows={2}
+                            placeholder={'Comment'}
+                            name={'comment'}
+                        />
 
-                            <Button
-                                disabled={isSubmitting || !dirty || !isValid}
-                                htmlType={'submit'}
-                                loading={loading}
-                                type={'primary'}
-                            >
-                                {'Submit'}
-                            </Button>
-                            <Link to={'/todos'}>
-                                <Button htmlType={'button'}>{'Cancel'}</Button>
-                            </Link>
-                        </FormContainer>
-                    </Form>
+                        <Button
+                            disabled={isSubmitting || !dirty || !isValid}
+                            htmlType={'submit'}
+                            loading={loading}
+                            type={'primary'}
+                        >
+                            {'Submit'}
+                        </Button>
+                        <Link to={'/todos'}>
+                            <Button htmlType={'button'}>{'Cancel'}</Button>
+                        </Link>
+                    </FormContainer>
+                    // </Form>
                 )}
             </Formik>
         </Card>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, List, Space } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { SORT_TYPES } from '../../../app/stores/todoStore';

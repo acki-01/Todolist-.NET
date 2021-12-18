@@ -7,7 +7,7 @@ import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 export default function DateInput(props: Partial<ReactDatePickerProps>) {
     const [field, meta, helpers] = useField(props.name!);
     return (
-        <Form>
+        <Form.Field>
             <DatePicker
                 {...field}
                 {...props}
@@ -19,6 +19,6 @@ export default function DateInput(props: Partial<ReactDatePickerProps>) {
                     {meta.error}
                 </Typography.Paragraph>
             )}
-        </Form>
+        </Form.Field>
     );
 }

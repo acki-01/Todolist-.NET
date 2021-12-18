@@ -1,7 +1,5 @@
-import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Profile } from '../../../app/models/profile';
-import { Typography } from 'antd';
 
 interface Props {
     participants: Profile[];

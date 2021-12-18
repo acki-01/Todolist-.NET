@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import TodoList from './TodoList';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import LoaderIndicator from '../../../app/layout/LoaderIndicator';
-import { Col, Row } from 'antd';
 import TodoFilters from './TodoFilters';
-import { StyledTodoList, Container } from './styled';
+import { Container } from './styled';
 
 function TodoDashboard() {
     const { todoStore } = useStore();

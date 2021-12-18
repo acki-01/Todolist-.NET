@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
-import { Form, Typography } from 'antd';
-import { Input } from 'semantic-ui-react';
+import { Typography } from 'antd';
+import { Input, Form } from 'semantic-ui-react';
 
 interface Props {
     placeholder: string;
@@ -13,7 +13,7 @@ interface Props {
 export default function TextInput(props: Props) {
     const [field, meta] = useField(props.name);
     return (
-        <Form.Item>
+        <Form.Field>
             <label>{props.label}</label>
             <Input {...field} {...props} />
             {meta.touched && meta.error && (
@@ -21,6 +21,6 @@ export default function TextInput(props: Props) {
                     {meta.error}
                 </Typography.Paragraph>
             )}
-        </Form.Item>
+        </Form.Field>
     );
 }

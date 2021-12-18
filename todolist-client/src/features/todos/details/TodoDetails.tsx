@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { Row, Col, Space, Card } from 'antd';
+import { useEffect } from 'react';
 import { useStore } from '../../../app/stores/store';
 import LoaderIndicator from '../../../app/layout/LoaderIndicator';
 import { useParams } from 'react-router-dom';

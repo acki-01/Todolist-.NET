@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { TodoWithParticipants } from '../../../app/models/todo';
-import { Card, Divider, Row, Space, Tag, Typography, Comment } from 'antd';
+import { Card, Divider, Row, Space, Tag, Comment } from 'antd';
 import {
     ClockCircleOutlined,
     CommentOutlined,

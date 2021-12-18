@@ -3,7 +3,11 @@ import React from 'react';
 import { Button, Image, Card, Typography } from 'antd';
 import { TodoWithParticipants } from '../../../app/models/todo';
 import { Link } from 'react-router-dom';
-import { UserAddOutlined } from '@ant-design/icons';
+import {
+    CheckSquareOutlined,
+    CloseSquareOutlined,
+    UserAddOutlined,
+} from '@ant-design/icons';
 
 const activityImageStyle = {
     filter: 'brightness(30%)',
@@ -26,6 +30,11 @@ function TodoDetailedHeader({ todo }: Props) {
             }
             title={
                 <>
+                    {todo.done ? (
+                        <CheckSquareOutlined style={{ fontSize: '24px' }} />
+                    ) : (
+                        <CloseSquareOutlined style={{ fontSize: '24px' }} />
+                    )}
                     <Typography.Title>{todo.title}</Typography.Title>
                     <Typography.Paragraph>
                         Owned by{' '}
@@ -46,6 +55,7 @@ function TodoDetailedHeader({ todo }: Props) {
                 }}
             >
                 <Button
+                    disabled={true}
                     icon={<UserAddOutlined />}
                     type={'primary'}
                     size={'middle'}

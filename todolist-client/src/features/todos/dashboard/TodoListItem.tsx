@@ -1,5 +1,5 @@
-import React, { MouseEvent } from 'react';
-import { Button, Card, Tag, List, Typography, Divider, Comment } from 'antd';
+import { MouseEvent } from 'react';
+import { Button, Card, Tag, List, Typography } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { TodoWithParticipants } from '../../../app/models/todo';
 import {
@@ -9,7 +9,6 @@ import {
 } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
-import TodoParticipantsList from './TodoParticipantsList';
 
 interface Props {
     todo: TodoWithParticipants;
