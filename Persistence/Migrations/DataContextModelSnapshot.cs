@@ -30,6 +30,20 @@ namespace Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Domain.Priority", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Priorities");
+                });
+
             modelBuilder.Entity("Domain.Todo", b =>
                 {
                     b.Property<Guid>("Id")
@@ -54,8 +68,8 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Finish_Time")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("PriorityId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
@@ -66,6 +80,8 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("PriorityId");
 
                     b.ToTable("Todos");
                 });
@@ -292,7 +308,13 @@ namespace Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("Domain.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId");
+
                     b.Navigation("Category");
+
+                    b.Navigation("Priority");
                 });
 
             modelBuilder.Entity("Domain.TodoParticipant", b =>

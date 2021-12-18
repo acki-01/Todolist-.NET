@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
-    public class Seed
+    public class Initial
     {
         public static async Task SeedData(DataContext context, UserManager<User> userManager)
         {
@@ -251,7 +251,7 @@ namespace Persistence
                     Finish_Time = DateTime.Now.AddDays(5),
                     Description = "Chleb, jajka, warzywa",
                     Comment = "To jest komentarz",
-                    Priority = priorities[2],
+                    Priority = priorities[0],
                     Title = "Zakupy",
                     Done = true,
                     Participants = new List<TodoParticipant>

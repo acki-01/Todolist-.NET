@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class NewDB : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,18 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Priorities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Priorities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,7 +187,7 @@ namespace Persistence.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Comment = table.Column<string>(type: "TEXT", nullable: true),
                     CategoryId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Priority = table.Column<int>(type: "INTEGER", nullable: false),
+                    PriorityId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Created_At = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated_At = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Finish_Time = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -188,6 +200,12 @@ namespace Persistence.Migrations
                         name: "FK_Todos_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Todos_Priorities_PriorityId",
+                        column: x => x.PriorityId,
+                        principalTable: "Priorities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -263,6 +281,11 @@ namespace Persistence.Migrations
                 name: "IX_Todos_CategoryId",
                 table: "Todos",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Todos_PriorityId",
+                table: "Todos",
+                column: "PriorityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -296,6 +319,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Priorities");
         }
     }
 }

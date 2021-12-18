@@ -12,7 +12,7 @@ namespace Application.Todos
         public string Description { get; set; }
         public string Comment { get; set; }
         public Category Category { get; set; }
-        public int Priority { get; set; }
+        public Priority Priority { get; set; }
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
         public DateTime Finish_Time { get; set; }

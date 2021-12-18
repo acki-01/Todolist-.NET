@@ -9,8 +9,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210517215441_NewDB")]
-    partial class NewDB
+    [Migration("20211123014112_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,20 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Domain.Priority", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Priorities");
                 });
 
             modelBuilder.Entity("Domain.Todo", b =>
@@ -56,8 +70,8 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("Finish_Time")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("PriorityId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
@@ -68,6 +82,8 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("PriorityId");
 
                     b.ToTable("Todos");
                 });
@@ -294,7 +310,13 @@ namespace Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("Domain.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId");
+
                     b.Navigation("Category");
+
+                    b.Navigation("Priority");
                 });
 
             modelBuilder.Entity("Domain.TodoParticipant", b =>

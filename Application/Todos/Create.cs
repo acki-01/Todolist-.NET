@@ -50,6 +50,7 @@ namespace Application.Todos
 
                 request.Todo.Participants.Add(participant);
                 request.Todo.Category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == request.Todo.Category.Id);
+                request.Todo.Priority = await _context.Priorities.FirstOrDefaultAsync(x => x.Id == request.Todo.Priority.Id);
 
                 _context.Todos.Add(request.Todo);
 
